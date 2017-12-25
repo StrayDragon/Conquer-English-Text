@@ -2,14 +2,15 @@
 #include<stdlib.h>
 #include<string.h>
 
-#define WORDSIZE 20
+#define WORDSIZE 20    //Tempoary word size
 
 int main(int argc ,char *argv[])
 {
 	char ch;
 	FILE *ofp;	//Object File Pointer;
 	FILE *dicfp;	//Dictionary File Pointer;
-
+	
+	/*Check up the arguments setting*/
 	if(argc != 2)
 	{
 		printf("Sorry,I can't open this %s... \n"
@@ -20,8 +21,8 @@ int main(int argc ,char *argv[])
 		exit(EXIT_FAILURE);
 	}
 		
-	char word[WORDSIZE] = {'\0'};
-	char *trace = NULL;
+	char word[WORDSIZE] = {'\0'};    //Initialize tempoary word array
+	char *trace = NULL;    //Trace the matching words(Use the strstr() in string.h)
 	int i = 0,count = 0;
 	int condition = 0;
 
@@ -31,7 +32,7 @@ int main(int argc ,char *argv[])
 	char *dic = (char*)malloc(sizeof(char) * (count +1));
 	char *dics = dic;
 	
-	fseek( dicfp, 0L ,SEEK_SET);
+	fseek( dicfp, 0L ,SEEK_SET);    //Jump to the beginning of dictionary file
 	
 	if(dic == NULL){
 		puts("Malloc Fail!");
@@ -45,7 +46,7 @@ int main(int argc ,char *argv[])
 	}
 	fclose(dicfp);
 	
-
+	/*Check the object file validity*/
 	if((ofp = fopen(argv[1], "r")) == NULL)
 	{
 		printf("Can't open %s,Please check the suffix(Extension name).",argv[1]);
@@ -56,7 +57,7 @@ int main(int argc ,char *argv[])
 	char* tmp;	
 	while((ch = getc(ofp)) != EOF)
 	{
-		condition = (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <='z');
+		condition = (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <='z');//Words' condition
 		if(condition){
 			word[i] = ch;
 			i++;
